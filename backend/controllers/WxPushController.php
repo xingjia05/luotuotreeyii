@@ -56,8 +56,8 @@ class WxPushController extends Controller
             }
             $param = [
                 'template_id' => '0Qb8clm-uN9BI8J3BmKQUBxZN3chCfXh-i0Qv95sGaI',
-//                'open_id' => $member['openid'],
-                'open_id' => 'oAhO-01_mxeWnBmT5PB_Dq4pSfOw',
+                'open_id' => $member['openid'],
+//                'open_id' => 'oAhO-01_mxeWnBmT5PB_Dq4pSfOw',
                 'url' => '',
                 'name' => $video[0]['name'],
                 'teacher_name' => $video[0]['teacher_name'],
