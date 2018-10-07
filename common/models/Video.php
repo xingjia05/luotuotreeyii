@@ -36,8 +36,8 @@ class Video extends \yii\db\ActiveRecord
     ];
 
     private static $is_remind_map = [
-        '1' => '是',
         '0' => '否',
+        '1' => '是',
     ];
 
     private static $is_out_of_stock_map = [
@@ -91,8 +91,8 @@ class Video extends \yii\db\ActiveRecord
             'is_remind' => '是否开课前提醒',
             'subscribe_num' => '预约人数',
             'is_out_of_stock' => '是否已下架',
-            'file' => '图片',
-            'image_big' => '大图',
+            'file' => '课程图标',
+            'image_big' => '宣传海报',
             'describe' => '课程简介',
             'add_time' => 'Add Time',
             'last_modify' => 'Last Modify',

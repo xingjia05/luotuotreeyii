@@ -15,8 +15,9 @@ use kartik\datetime\DateTimePicker;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'channel_id')->textInput(['maxlength' => true]) ?>
-
+    <div style="display: none">
+    <?= $form->field($model, 'channel_id')->textInput(['maxlength' => true, 'type' => 'hidden']) ?>
+    </div>
     <?= $form->field($model, 'name')->textarea(['rows' => 1]) ?>
 
     <?= $form->field($model, 'course_type')->dropDownList(

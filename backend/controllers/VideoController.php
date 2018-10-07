@@ -66,7 +66,16 @@ class VideoController extends Controller
     {
         $model = new Video();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $post = Yii::$app->request->post();
+        if (!empty($post['Video'])) {
+            $live = $this->createLive(['name' => $post['Video']['name']]);
+            if (!empty($live['data'])) {
+                $post['Video']['channel_id'] = (string)$live['data']['channelId'];
+            }
+        }
+//        print_r($post);die;
+
+        if ($model->load($post) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -123,5 +132,46 @@ class VideoController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    private function createLive($param) {
+        //设置post数据
+        $post_data = array(
+            "appId" => "f0izdmj7b7",
+            "timestamp" => time()*1000,
+            'userId' => '4630174efe',
+            'name' => $param['name'],
+            'channelPasswd' => '1',
+        );
+        $post_data['sign'] =  $this->getSign($post_data);
+        //显示获得的数据
+        //初始化
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'http://api.polyv.net/live/v2/channels/');
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 );
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 360);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+        $response = curl_exec ( $ch );
+        curl_close ( $ch );
+        if (!empty($response)) {
+            return json_decode($response,true);
+        }
+    }
+
+    function getSign($params){
+        $appSecret = '8ddafa04da8d4d509f341130690278de';
+        // 1. 对加密数组进行字典排序
+        foreach ($params as $key=>$value){
+            $arr[$key] = $key;
+        }
+        sort($arr);
+        $str = $appSecret;
+        foreach ($arr as $k => $v) {
+            $str = $str.$arr[$k].$params[$v];
+        }
+        $restr = $str.$appSecret;
+        $sign = strtoupper(md5($restr));
+        return $sign;
     }
 }

@@ -54,7 +54,7 @@ class VideoSearch extends Video
                     'id' => SORT_DESC
                 ]
             ],
-            'pagination' => ['pageSize' => 2]
+            'pagination' => ['pageSize' => 10]
         ]);
 
         $this->load($params);
