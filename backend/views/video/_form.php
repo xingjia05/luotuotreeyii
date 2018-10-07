@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use common\models\Video;
 use yii\helpers\ArrayHelper;
+use kartik\datetime\DateTimePicker;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Video */
@@ -26,15 +27,24 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'teacher_name')->textarea(['rows' => 1]) ?>
 
-    <?= $form->field($model, 'play_time')->textarea(['rows' => 1]) ?>
+    <?= $form->field($model, 'play_time')->widget(DateTimePicker::classname(), [
+        'options' => ['placeholder' => ''],
+        'pluginOptions' => [
+            'autoclose' => true,
+            'todayHighlight' => true,
+        ]
+    ]); ?>
+
+    <?= $form->field($model, 'file')->widget('manks\FileInput', []) ?>
+    <?= $form->field($model, 'image_big')->widget('manks\FileInput', []) ?>
 
     <?= $form->field($model, 'is_remind')->dropDownList(
         Video::isRemindList(), []);?>
 
-    <?= $form->field($model, 'subscribe_num')->textarea(['rows' => 1]) ?>
-
     <?= $form->field($model, 'is_out_of_stock')->dropDownList(
         Video::isRemindList(), []);?>
+
+    <?= $form->field($model, 'describe')->textarea(['rows' => 6]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? '新增' : '修改', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

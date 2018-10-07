@@ -16,5 +16,12 @@ return [
             'password' => '123456',
             'charset' => 'utf8',
         ],
+        'db_z' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=127.0.0.1;dbname=ultrax',
+            'username' => 'luotuo',
+            'password' => '123456',
+            'charset' => 'utf8',
+        ],
     ],
 ];

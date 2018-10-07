@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
-    </p>
+        <?= Html::a('发送', ['wx-push/index', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
 
     <?= DetailView::widget([
         'model' => $model,

@@ -17,6 +17,7 @@ use Yii;
  * @property int $is_remind 是否开课前提醒:1 是，0 否
  * @property int $subscribe_num 预约人数
  * @property int $is_out_of_stock 是否已下架:1 是，0 否
+ * @property int $file 图片
  * @property string $add_time
  * @property string $last_modify
  */
@@ -49,7 +50,7 @@ class Video extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'video';
+        return 'lts_video';
     }
 
     /**
@@ -64,6 +65,13 @@ class Video extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 127],
             [['teacher_name'], 'string', 'max' => 63],
             [['play_time'], 'string', 'max' => 19],
+            [['file'], 'required'],
+            [['file'], 'safe'],
+            [['file'], 'string', 'max' => 255],
+            [['image_big'], 'required'],
+            [['image_big'], 'safe'],
+            [['image_big'], 'string', 'max' => 255],
+            [['describe'], 'string', 'max' => 512],
         ];
     }
 
@@ -83,6 +91,9 @@ class Video extends \yii\db\ActiveRecord
             'is_remind' => '是否开课前提醒',
             'subscribe_num' => '预约人数',
             'is_out_of_stock' => '是否已下架',
+            'file' => '图片',
+            'image_big' => '大图',
+            'describe' => '课程简介',
             'add_time' => 'Add Time',
             'last_modify' => 'Last Modify',
         ];
@@ -118,5 +129,20 @@ class Video extends \yii\db\ActiveRecord
 
     public static function isOutOfStockList() {
         return self::$is_out_of_stock_map;
+    }
+
+    public function getDetail($id)
+    {
+        if (empty($id)) {
+            return [];
+        }
+        $ret = self::find()
+            ->select('*')
+            ->where('id = ' . $id)
+            ->andWhere('is_out_of_stock = 0')
+            ->andWhere('is_remind = 1')
+            ->asArray()
+            ->all();
+        return $ret;
     }
 }
