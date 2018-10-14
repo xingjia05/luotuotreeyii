@@ -18,14 +18,12 @@ class Redis {
 	 * @var string
 	 */
 	protected static $prefix = NULL;
-    //TODO-refactor
 	protected static $debug = 1;
 
 	protected static $configfile = 'redis';
 
 	/**
 	 * the server_id of the Redis Cluster
-	 *
 	 * @var int
 	 */
 
@@ -37,7 +35,7 @@ class Redis {
 	 * Initialize a Redis connection.
 	 */
 	protected static function connect($host, $port, $timeout = 0.2, $auth = '') {
-		$redis = new \Redis();
+	    $redis = new \Redis();
 		$redis->connect($host, $port, $timeout);
         if (!empty($auth)) {
             $redis->auth($auth);
@@ -45,8 +43,6 @@ class Redis {
         if ($redis->isConnected()) {
 		    $redis->setOption(\Redis::OPT_READ_TIMEOUT, $timeout);
         }
-        ////alias $redis->GetReadTimeout(); 
-        //$ret = $redis->getOption(\Redis::OPT_READ_TIMEOUT);
 		return $redis;
 	}
 
@@ -97,11 +93,6 @@ class Redis {
 		}
 		return FALSE;
 	}
-
-
-    private static $transMethod = array(
-        'multi' => 1, 'exec' => 1, 'unwatch' => 1, 'discard' => 1,
-    );
 
     protected static $multiProcesser = NULL;
 

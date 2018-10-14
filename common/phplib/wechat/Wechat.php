@@ -1219,12 +1219,12 @@ class Wechat
             return $this->access_token;
         }
 
-//        $cachename = 'wechat_access_token_' . $appid;
+        $cachename = 'wechat_access_token_' . $appid;
 
-//        if ($rs = $this->getCache($cachename))  {
-//            $this->access_token = $rs;
-//            return $rs;
-//        }
+        if ($rs = $this->getCache($cachename))  {
+            $this->access_token = $rs;
+            return $rs;
+        }
 
         $result = $this->http_get(self::API_URL_PREFIX.self::AUTH_URL.'appid='.$appid.'&secret='.$appsecret);
         if ($result)
@@ -1237,7 +1237,7 @@ class Wechat
             }
             $this->access_token = $json['access_token'];
             $expire = $json['expires_in'] ? intval($json['expires_in'])-100 : 3600;
-//            $this->setCache($cachename,$this->access_token,$expire);
+            $this->setCache($cachename,$this->access_token,$expire);
             return $this->access_token;
         }
         return false;
